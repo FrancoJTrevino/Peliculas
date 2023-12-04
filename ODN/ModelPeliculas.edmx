@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PeliculasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="250" />
+          <Property Name="Apellido" Type="varchar" MaxLength="250" />
+          <Property Name="Edad" Type="int" />
+          <Property Name="Foto" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Datos_Pelicula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Pelicula" Type="int" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="1000" />
+          <Property Name="Trailer" Type="varchar" MaxLength="250" />
+          <Property Name="Opinion_Usuario" Type="varchar" MaxLength="1000" />
+          <Property Name="Puntuacion_Usuario" Type="char" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="Peliculas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" />
+          <Property Name="Fecha_Salida" Type="date" />
+          <Property Name="Duracion" Type="int" />
+          <Property Name="Clasificacion" Type="varchar" MaxLength="10" />
+          <Property Name="Poster" Type="varchar" MaxLength="250" />
+          <Property Name="Generos" Type="varchar" MaxLength="250" />
+          <Property Name="Puntuacion_IMDB" Type="char" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="Reparto_Pelicula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Datos_Pelicula" Type="int" />
+          <Property Name="Direccion" Type="varchar" MaxLength="250" />
+          <Property Name="Guion" Type="varchar" MaxLength="250" />
+          <Property Name="Actores" Type="varchar" MaxLength="250" />
+          <Property Name="Personajes" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <Association Name="FK__Datos_Pel__Id_Pe__267ABA7A">
+          <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="0..1" />
+          <End Role="Datos_Pelicula" Type="Self.Datos_Pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Peliculas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Datos_Pelicula">
+              <PropertyRef Name="Id_Pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reparto_P__Id_Da__29572725">
+          <End Role="Datos_Pelicula" Type="Self.Datos_Pelicula" Multiplicity="0..1" />
+          <End Role="Reparto_Pelicula" Type="Self.Reparto_Pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Datos_Pelicula">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reparto_Pelicula">
+              <PropertyRef Name="Id_Datos_Pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PeliculasModelStoreContainer">
+          <EntitySet Name="Actores" EntityType="Self.Actores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Datos_Pelicula" EntityType="Self.Datos_Pelicula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Peliculas" EntityType="Self.Peliculas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reparto_Pelicula" EntityType="Self.Reparto_Pelicula" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Datos_Pel__Id_Pe__267ABA7A" Association="Self.FK__Datos_Pel__Id_Pe__267ABA7A">
+            <End Role="Peliculas" EntitySet="Peliculas" />
+            <End Role="Datos_Pelicula" EntitySet="Datos_Pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reparto_P__Id_Da__29572725" Association="Self.FK__Reparto_P__Id_Da__29572725">
+            <End Role="Datos_Pelicula" EntitySet="Datos_Pelicula" />
+            <End Role="Reparto_Pelicula" EntitySet="Reparto_Pelicula" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PeliculasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Actores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int32" />
+          <Property Name="Foto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Datos_Pelicula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Pelicula" Type="Int32" />
+          <Property Name="Descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Trailer" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Opinion_Usuario" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Puntuacion_Usuario" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Peliculas" Relationship="Self.FK__Datos_Pel__Id_Pe__267ABA7A" FromRole="Datos_Pelicula" ToRole="Peliculas" />
+          <NavigationProperty Name="Reparto_Pelicula" Relationship="Self.FK__Reparto_P__Id_Da__29572725" FromRole="Datos_Pelicula" ToRole="Reparto_Pelicula" />
+        </EntityType>
+        <EntityType Name="Peliculas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Salida" Type="DateTime" Precision="0" />
+          <Property Name="Duracion" Type="Int32" />
+          <Property Name="Clasificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Poster" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Generos" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Puntuacion_IMDB" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Datos_Pelicula" Relationship="Self.FK__Datos_Pel__Id_Pe__267ABA7A" FromRole="Peliculas" ToRole="Datos_Pelicula" />
+        </EntityType>
+        <EntityType Name="Reparto_Pelicula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Datos_Pelicula" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Guion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Actores" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Personajes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Datos_Pelicula" Relationship="Self.FK__Reparto_P__Id_Da__29572725" FromRole="Reparto_Pelicula" ToRole="Datos_Pelicula" />
+        </EntityType>
+        <Association Name="FK__Datos_Pel__Id_Pe__267ABA7A">
+          <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="0..1" />
+          <End Role="Datos_Pelicula" Type="Self.Datos_Pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Peliculas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Datos_Pelicula">
+              <PropertyRef Name="Id_Pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reparto_P__Id_Da__29572725">
+          <End Role="Datos_Pelicula" Type="Self.Datos_Pelicula" Multiplicity="0..1" />
+          <End Role="Reparto_Pelicula" Type="Self.Reparto_Pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Datos_Pelicula">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reparto_Pelicula">
+              <PropertyRef Name="Id_Datos_Pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PeliculasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actores" EntityType="Self.Actores" />
+          <EntitySet Name="Datos_Pelicula" EntityType="Self.Datos_Pelicula" />
+          <EntitySet Name="Peliculas" EntityType="Self.Peliculas" />
+          <EntitySet Name="Reparto_Pelicula" EntityType="Self.Reparto_Pelicula" />
+          <AssociationSet Name="FK__Datos_Pel__Id_Pe__267ABA7A" Association="Self.FK__Datos_Pel__Id_Pe__267ABA7A">
+            <End Role="Peliculas" EntitySet="Peliculas" />
+            <End Role="Datos_Pelicula" EntitySet="Datos_Pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reparto_P__Id_Da__29572725" Association="Self.FK__Reparto_P__Id_Da__29572725">
+            <End Role="Datos_Pelicula" EntitySet="Datos_Pelicula" />
+            <End Role="Reparto_Pelicula" EntitySet="Reparto_Pelicula" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PeliculasModelStoreContainer" CdmEntityContainer="PeliculasEntities">
+          <EntitySetMapping Name="Actores">
+            <EntityTypeMapping TypeName="PeliculasModel.Actores">
+              <MappingFragment StoreEntitySet="Actores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Datos_Pelicula">
+            <EntityTypeMapping TypeName="PeliculasModel.Datos_Pelicula">
+              <MappingFragment StoreEntitySet="Datos_Pelicula">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Pelicula" ColumnName="Id_Pelicula" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Trailer" ColumnName="Trailer" />
+                <ScalarProperty Name="Opinion_Usuario" ColumnName="Opinion_Usuario" />
+                <ScalarProperty Name="Puntuacion_Usuario" ColumnName="Puntuacion_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Peliculas">
+            <EntityTypeMapping TypeName="PeliculasModel.Peliculas">
+              <MappingFragment StoreEntitySet="Peliculas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Fecha_Salida" ColumnName="Fecha_Salida" />
+                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+                <ScalarProperty Name="Clasificacion" ColumnName="Clasificacion" />
+                <ScalarProperty Name="Poster" ColumnName="Poster" />
+                <ScalarProperty Name="Generos" ColumnName="Generos" />
+                <ScalarProperty Name="Puntuacion_IMDB" ColumnName="Puntuacion_IMDB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reparto_Pelicula">
+            <EntityTypeMapping TypeName="PeliculasModel.Reparto_Pelicula">
+              <MappingFragment StoreEntitySet="Reparto_Pelicula">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Datos_Pelicula" ColumnName="Id_Datos_Pelicula" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Guion" ColumnName="Guion" />
+                <ScalarProperty Name="Actores" ColumnName="Actores" />
+                <ScalarProperty Name="Personajes" ColumnName="Personajes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
