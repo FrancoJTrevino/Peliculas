@@ -16,6 +16,7 @@ namespace Peliculas
     {
         JsonByID.Root _pelicula = new JsonByID.Root();
         JsonImage.Root _poster = new JsonImage.Root();
+        ODN.Peliculas _editpelicula = new ODN.Peliculas();
         string _error = "";
         public FormAgregarPelicula()
         {
@@ -26,6 +27,11 @@ namespace Peliculas
             InitializeComponent();
             _pelicula = pelicula;
             _poster = poster;
+        }
+        public FormAgregarPelicula(ODN.Peliculas Pelicula)
+        {
+            InitializeComponent();
+            _editpelicula = Pelicula;
         }
         private void FormAgregarPelicula_Load(object sender, EventArgs e)
         {
@@ -42,6 +48,27 @@ namespace Peliculas
                 foreach (string x in _pelicula.genres) { if (txtGeneros.Text == "") { txtGeneros.Text += x; } else { txtGeneros.Text += ", " + x; } }
                 foreach (string x in _pelicula.directors) { if (txtDireccion.Text == "") { txtDireccion.Text += x; } else { txtDireccion.Text += ", " + x; } }
                 foreach (string x in _pelicula.stars) { if (txtActor.Text == "") { txtActor.Text += x; } else { txtActor.Text += ", " + x; } }
+            }
+            else if (_editpelicula.Id != 0)
+            {
+                Datos_Pelicula datos = _editpelicula.Datos_Pelicula.ToList()[0];
+                Reparto_Pelicula reparto = datos.Reparto_Pelicula.ToList()[0];
+                txtTitulo.Text = _editpelicula.Nombre;
+                txtDescripcion.Text = datos.Descripcion;
+                dtFechaSalida.Value = Convert.ToDateTime(_editpelicula.Fecha_Salida);
+                txtHours.Text = (_editpelicula.Duracion / 60).ToString();
+                txtMinutes.Text = (_editpelicula.Duracion % 60).ToString();
+                txtClasificacion.Text = _editpelicula.Clasificacion;
+                txtPoster.Text = _editpelicula.Poster;
+                txtGeneros.Text = _editpelicula.Generos;
+                txtIMDBRating.Text = _editpelicula.Puntuacion_IMDB.Trim();
+                txtTrailer.Text = datos.Trailer;
+                txtDireccion.Text = reparto.Direccion;
+                txtGuion.Text = reparto.Guion;
+                txtActor.Text = reparto.Actores;
+                txtPersonaje.Text = reparto.Personajes;
+                txtUserOpinion.Text = datos.Opinion_Usuario;
+                txtUserRating.Text = datos.Puntuacion_Usuario;
             }
         }
 
@@ -74,26 +101,58 @@ namespace Peliculas
                 MessageBox.Show(_error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            ODN.Peliculas Pelicula = RellenarPelicula();
-            var res = PeliculasBLL.Add(Pelicula);
-            if (res) 
-            { 
-                lblSuccess.Visible = true;
-                lblClosing.Visible = true;
-                int i = 3;
-                while (i > 0)
+            if(_editpelicula.Id != 0)
+            {
+                ODN.Peliculas Peliculas = RellenarPelicula();
+                Peliculas.Id = _editpelicula.Id;
+                Peliculas.Datos_Pelicula.ToList()[0].Id = _editpelicula.Datos_Pelicula.ToList()[0].Id;
+                Peliculas.Datos_Pelicula.ToList()[0].Id_Pelicula = _editpelicula.Datos_Pelicula.ToList()[0].Id_Pelicula;
+                Peliculas.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Id = _editpelicula.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Id;
+                Peliculas.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Id_Datos_Pelicula = _editpelicula.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Id_Datos_Pelicula;
+                var res = PeliculasBLL.Update(Peliculas);
+                if (res)
                 {
-                    lblClosing.Text = "Cerrando formulario en " + i + "...";
-                    i--;
-                    System.Threading.Thread.Sleep(1000);
+                    lblSuccess.Visible = true;
+                    lblClosing.Visible = true;
+                    int i = 3;
+                    while (i > 0)
+                    {
+                        lblClosing.Text = "Cerrando formulario en " + i + "...";
+                        i--;
+                    }
+                    //var form = new FormPelicula(Peliculas.Id);
+                    //form.StartPosition = FormStartPosition.CenterScreen;
+                    //form.Show();
+                    //this.Close();
                 }
-                this.Close();
-            } 
-            else 
-            { 
-                lblError.Visible = true; 
-                lnklblError.Visible = true;
+                else
+                {
+                    lblError.Visible = true;
+                }
             }
+            else
+            {
+                ODN.Peliculas Pelicula = RellenarPelicula();
+                var res = PeliculasBLL.Add(Pelicula);
+                if (res)
+                {
+                    lblSuccess.Visible = true;
+                    lblClosing.Visible = true;
+                    int i = 3;
+                    while (i > 0)
+                    {
+                        lblClosing.Text = "Cerrando formulario en " + i + "...";
+                        i--;
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                    this.Close();
+                }
+                else
+                {
+                    lblError.Visible = true;
+                    //lnklblError.Visible = true;
+                }
+            }            
         }
 
         public ODN.Peliculas RellenarPelicula()
@@ -180,9 +239,9 @@ namespace Peliculas
                     }
                     return boolOK;
                 }
-                if (ListTXT[i].Length > 4 && i == 5)
+                if (ListTXT[i].Length > 8 && i == 5)
                 {
-                    _error = "El campo Puntuación IMDB no puede superar los 4 caracteres";
+                    _error = "El campo Puntuación IMDB no puede superar los 8 caracteres";
                     return boolOK;
                 } //IMDBRating
                 if (ListTXT[i].Length > 10 && i == 2)

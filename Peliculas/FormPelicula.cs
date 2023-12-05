@@ -17,6 +17,7 @@ namespace Peliculas
     {
         int _IdPelicula = 0;
         string _NombrePelicula = "";
+        ODN.Peliculas _pelicula = new ODN.Peliculas();
 
         public FormPelicula(int IdPelicula)
         {
@@ -37,22 +38,23 @@ namespace Peliculas
 
         private void FormPelicula_Load(object sender, EventArgs e)
         {
-            ODN.Peliculas Pelicula;
-
             if (_IdPelicula != 0)
             {
-                Pelicula = GetPeliculaById(_IdPelicula);
+                _pelicula = GetPeliculaById(_IdPelicula);
+                ActualizarDatos(_pelicula);
             }
             else if (_NombrePelicula != "")
             {
-                Pelicula = GetPeliculaByNombre(_NombrePelicula);
+                _pelicula = GetPeliculaByNombre(_NombrePelicula);
+                ActualizarDatos(_pelicula);
             }
-            else
-            {
-                Pelicula = new ODN.Peliculas();
-            }
-
-            ActualizarDatos(Pelicula);
+        }
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            var form = new FormAgregarPelicula(_pelicula);
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.ShowDialog();
+            //this.Close();
         }
 
         private void ActualizarDatos(ODN.Peliculas Pelicula)
@@ -71,7 +73,7 @@ namespace Peliculas
             lblDuración.Text = Pelicula.Duracion / 60 + "h " + Pelicula.Duracion % 60 + "m";
             lblFecha.Text = Convert.ToDateTime(Pelicula.Fecha_Salida).Year.ToString();
             lblGeneros.Text = Pelicula.Generos.Replace(",", " -");
-            lblPuntuacionIMDB.Text = Pelicula.Puntuacion_IMDB;
+            lblPuntuacionIMDB.Text = Pelicula.Puntuacion_IMDB.Trim();
 
             ActualizarReparto(Personajes, Direccion, Guion, Actores);
 
@@ -120,5 +122,6 @@ namespace Peliculas
             ODN.Peliculas Pelicula = PeliculasBLL.PeliculasByNombre(Nombre).ToList()[0];
             return Pelicula;
         }
+
     }
 }

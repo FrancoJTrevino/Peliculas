@@ -73,11 +73,35 @@ namespace DAL
         public static bool Update(Peliculas Pelicula)
         {
             var res = false;
-            var movie = PeliculaById(Pelicula.Id);
-            movie = Pelicula;
+            Peliculas movie = PeliculaById(Pelicula.Id);
+            if (movie == null)
+            {
+                return res;
+            }
+            movie = UpdateMovie(movie, Pelicula);
             var x = contexto.SaveChanges();
             if (x > 0) { res = true; }
             return res;
+        }
+        public static Peliculas UpdateMovie(Peliculas movie, Peliculas Pelicula)
+        {
+            movie.Clasificacion = Pelicula.Clasificacion;
+            movie.Duracion = Pelicula.Duracion;
+            movie.Fecha_Salida = Pelicula.Fecha_Salida;
+            movie.Generos = Pelicula.Generos;
+            movie.Nombre = Pelicula.Nombre;
+            movie.Poster = Pelicula.Poster;
+            movie.Puntuacion_IMDB = Pelicula.Puntuacion_IMDB;
+            movie.Datos_Pelicula.ToList()[0].Descripcion = Pelicula.Datos_Pelicula.ToList()[0].Descripcion;
+            movie.Datos_Pelicula.ToList()[0].Opinion_Usuario = Pelicula.Datos_Pelicula.ToList()[0].Opinion_Usuario;
+            movie.Datos_Pelicula.ToList()[0].Puntuacion_Usuario = Pelicula.Datos_Pelicula.ToList()[0].Puntuacion_Usuario;
+            movie.Datos_Pelicula.ToList()[0].Reparto_Pelicula = Pelicula.Datos_Pelicula.ToList()[0].Reparto_Pelicula;
+            movie.Datos_Pelicula.ToList()[0].Trailer = Pelicula.Datos_Pelicula.ToList()[0].Trailer;
+            movie.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Actores = Pelicula.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Actores;
+            movie.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Direccion = Pelicula.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Direccion;
+            movie.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Guion = Pelicula.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Guion;
+            movie.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Personajes = Pelicula.Datos_Pelicula.ToList()[0].Reparto_Pelicula.ToList()[0].Personajes;
+            return movie;
         }
     }
 }

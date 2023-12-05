@@ -42,6 +42,7 @@ namespace Peliculas
             this.lblPuntuacionUsuario = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblReparto = new System.Windows.Forms.Label();
+            this.btnEditar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbPoster)).BeginInit();
             this.SuspendLayout();
             // 
@@ -174,11 +175,23 @@ namespace Peliculas
             this.lblReparto.TabIndex = 12;
             this.lblReparto.Text = "Personajes:";
             // 
+            // btnEditar
+            // 
+            this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnEditar.Location = new System.Drawing.Point(1149, 644);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(110, 32);
+            this.btnEditar.TabIndex = 13;
+            this.btnEditar.Text = "Editar Pelicula";
+            this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            // 
             // FormPelicula
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.lblReparto);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblPuntuacionUsuario);
@@ -193,7 +206,6 @@ namespace Peliculas
             this.Controls.Add(this.lblFecha);
             this.Controls.Add(this.lblTitulo);
             this.Name = "FormPelicula";
-            this.Text = "Form1";
             this.Load += new System.EventHandler(this.FormPelicula_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbPoster)).EndInit();
             this.ResumeLayout(false);
@@ -216,6 +228,7 @@ namespace Peliculas
         private System.Windows.Forms.Label lblPuntuacionUsuario;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblReparto;
+        private System.Windows.Forms.Button btnEditar;
     }
 }
 

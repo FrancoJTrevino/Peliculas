@@ -165,6 +165,7 @@ namespace Peliculas
             else
             {
                 var form = new FormPelicula(NombrePelicula);
+                form.StartPosition = FormStartPosition.CenterScreen;
                 form.ShowDialog();
             }
         }
