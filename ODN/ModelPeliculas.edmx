@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PeliculasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PeliculasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Actores">
           <Key>
             <PropertyRef Name="Id" />
@@ -38,6 +38,7 @@
           <Property Name="Poster" Type="varchar" MaxLength="250" />
           <Property Name="Generos" Type="varchar" MaxLength="250" />
           <Property Name="Puntuacion_IMDB" Type="char" MaxLength="8" />
+          <Property Name="idIMDB" Type="varchar" MaxLength="10" StoreGeneratedPattern="None" />
         </EntityType>
         <EntityType Name="Reparto_Pelicula">
           <Key>
@@ -88,8 +89,7 @@
             <End Role="Reparto_Pelicula" EntitySet="Reparto_Pelicula" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PeliculasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -129,6 +129,7 @@
           <Property Name="Generos" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Puntuacion_IMDB" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Datos_Pelicula" Relationship="Self.FK__Datos_Pel__Id_Pe__267ABA7A" FromRole="Peliculas" ToRole="Datos_Pelicula" />
+          <Property Name="idIMDB" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Reparto_Pelicula">
           <Key>
@@ -212,6 +213,7 @@
           <EntitySetMapping Name="Peliculas">
             <EntityTypeMapping TypeName="PeliculasModel.Peliculas">
               <MappingFragment StoreEntitySet="Peliculas">
+                <ScalarProperty Name="idIMDB" ColumnName="idIMDB" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Fecha_Salida" ColumnName="Fecha_Salida" />

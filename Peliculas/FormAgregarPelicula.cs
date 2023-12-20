@@ -168,6 +168,7 @@ namespace Peliculas
             Peliculas.Nombre = txtTitulo.Text;
             Peliculas.Poster = txtPoster.Text;
             Peliculas.Puntuacion_IMDB = txtIMDBRating.Text;
+            Peliculas.idIMDB = _pelicula.imdb_id;
             Datos.Descripcion = txtDescripcion.Text;
             Datos.Opinion_Usuario = txtUserOpinion.Text;
             Datos.Puntuacion_Usuario = txtUserRating.Text;

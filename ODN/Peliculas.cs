@@ -28,6 +28,7 @@ namespace ODN
         public string Poster { get; set; }
         public string Generos { get; set; }
         public string Puntuacion_IMDB { get; set; }
+        public string idIMDB { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Datos_Pelicula> Datos_Pelicula { get; set; }
